@@ -31,8 +31,8 @@ class EventsManager:
     def register_event(self, event):
         self.events.append(event)
 
-        for hook in event.commands:
-            self.transport.register(hook)
+        for command in event.commands:
+            self.transport.register(command)
 
     def send_message(self, event_hook, data):
         self.transport.send(event_hook, data)

@@ -40,8 +40,9 @@ class EventCommand:
         self.event = event
         self.app = self.get_app(command)
 
-    def __call__(self, *args, **kwargs):
-        return self.command(*args, **kwargs)
+    def __call__(*args, **kwargs):
+        self = args[0]
+        return self.command(**kwargs)
 
     def send(self, data):
         self.event.event_manager.send_message(self, data)
