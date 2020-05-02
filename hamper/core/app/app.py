@@ -1,6 +1,7 @@
 import attr
 import pkgutil
 import sys
+import importlib
 
 from hamper.core.command import AttrsCommand
 
@@ -14,9 +15,18 @@ class App:
 
     def limit_modules(self, keep_public=None):
         package = sys.modules[self.package_name]
+
+        # import public first
+        for importer, modname, ispkg in pkgutil.iter_modules(package.__path__):
+            if keep_public and modname in keep_public:
+                full_name = package.__name__ + '.' + modname
+                importlib.import_module(full_name)
+
+        # limit all others
         for importer, modname, ispkg in pkgutil.iter_modules(package.__path__):
             if keep_public and modname in keep_public:
                 continue
+
             setattr(package, modname, NotImplemented)
 
     def attrs_command(self, *args, **kwargs):
