@@ -16,9 +16,9 @@ class EventsManager:
         def wrap(message_class):
             event = Event(message_class, self)
 
+            message_class.__attrs_post_init__ = event_post_init
             attrs_event = attr.s(*args, **kwargs)(message_class)
 
-            attrs_event.__attrs_post_init__ = event_post_init
             attrs_event.__event__ = event
 
             self.register_event(event)
