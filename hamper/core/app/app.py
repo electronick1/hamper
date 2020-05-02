@@ -22,7 +22,7 @@ class App:
     def attrs_command(self, *args, **kwargs):
 
         def wrap(callable_obj):
-            callable_obj = attr.s(args, **kwargs)(callable_obj)
+            callable_obj = attr.s(*args, **kwargs)(callable_obj)
             callable_obj.__app__ = self
 
             self.commands.append(AttrsCommand(callable_obj))
