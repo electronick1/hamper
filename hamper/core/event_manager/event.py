@@ -2,7 +2,8 @@ import inspect
 
 
 def event_post_init(event_instance, *args, **kwargs):
-    event_instance.__post_init__(event_instance, *args, **kwargs)
+    if hasattr(event_instance, "__post_init__"):
+        event_instance.__post_init__(event_instance, *args, **kwargs)
 
     event = event_instance.__event__
     for command in event.commands:
