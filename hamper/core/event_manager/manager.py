@@ -9,7 +9,6 @@ class EventsManager:
         self.name = name
 
         self.events = []
-
         self.transport = transport(self)
 
     def attr_event(self, *args, **kwargs):
@@ -17,7 +16,7 @@ class EventsManager:
         def wrap(message_class):
             event = Event(message_class, self)
 
-            attrs_event = attr.s(message_class)
+            attrs_event = attr.s(*args, **kwargs)(message_class)
 
             attrs_event.__attrs_post_init__ = event_post_init
             attrs_event.__event__ = event
