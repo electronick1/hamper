@@ -2,8 +2,8 @@ import inspect
 
 
 def event_post_init(event_instance, *args, **kwargs):
-    if hasattr(event_instance, "__post_init__"):
-        event_instance.__post_init__(event_instance, *args, **kwargs)
+    if hasattr(event_instance, "__post_run__"):
+        event_instance.__post_run__(event_instance, *args, **kwargs)
 
     event = event_instance.__event__
     for command in event.commands:
@@ -40,9 +40,9 @@ class EventCommand:
         self.event = event
         self.app = self.get_app(command)
 
-    def __call__(*args, **kwargs):
+    def __call__(*args, data):
         self = args[0]
-        return self.command(**kwargs)
+        return self.command(event=self.event.message_class(data))
 
     def send(self, data):
         self.event.event_manager.send_message(self, data)
