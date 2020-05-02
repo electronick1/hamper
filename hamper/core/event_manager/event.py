@@ -46,7 +46,7 @@ class EventCommand:
         self.event.event_manager.send_message(self, data)
 
     def get_key(self):
-        name = getattr(self.command, __qualname__, default=self.command.__name__)
+        name = getattr(self.command, "__qualname__", default=self.command.__name__)
         return "%s:%s" % (self.app.package_name, name)
 
     def get_manager_key(self):
