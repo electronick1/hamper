@@ -20,6 +20,7 @@ class EventsManager:
             attrs_event = attr.s(*args, **kwargs)(message_class)
 
             attrs_event.__event__ = event
+            attrs_event.__json__ = lambda self: attr.asdict(self)
 
             self.register_event(event)
 

@@ -7,7 +7,7 @@ def event_post_init(event_instance, *args, **kwargs):
 
     event = event_instance.__event__
     for command in event.commands:
-        command.send(event_instance)
+        command.send(event_instance.__json__())
 
 
 class Event:
